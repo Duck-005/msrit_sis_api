@@ -55,3 +55,4 @@ Query Parameters:<br>
 1. [FastApi](https://pypi.org/project/fastapi/)
 2. [uvicorn](https://pypi.org/project/uvicorn/)
 3. [selenium](https://pypi.org/project/selenium/)
+4. [pydantic](https://pypi.org/project/pydantic/)
