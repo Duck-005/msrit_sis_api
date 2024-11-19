@@ -50,6 +50,11 @@ Query Parameters:<br>
 }
 ```
 
+## Important
+> A proper version of chromeDriver is needed to run the headless selenium browser instance. <br>
+> It can be downloaded from [chromeDriver](https://googlechromelabs.github.io/chrome-for-testing/) <br>
+> Place it in the root folder
+
 ## modules used
 
 1. [FastApi](https://pypi.org/project/fastapi/)
