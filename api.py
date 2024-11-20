@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Path
+from fastapi import FastAPI
 from scrape import SIS
 
 app = FastAPI()

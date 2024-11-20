@@ -23,12 +23,14 @@ options.add_argument("--disable-extensions")
 options.add_argument("--disable-notifications")  
 options.add_argument("--disable-plugins")  
 options.add_argument("--disable-infobars") 
-driver = webdriver.Chrome(service=service, options=options)
-
-driver.get('https://parents.msrit.edu/newparents/')
 
 class SIS:
+    def __init__(self):
+        self.driver = webdriver.Chrome(service=service, options=options)
+    
     def scrape(self, usn, password):
+        driver = self.driver
+        driver.get('https://parents.msrit.edu/newparents/')
         self.login(usn, password)
         pfImage = driver.find_element(By.XPATH, '//*[@id="page_bg"]/div[1]/div/div/div[2]/div/div/div[1]/div/img').get_attribute("src")
         name = driver.find_element(By.XPATH, '//*[@id="page_bg"]/div[1]/div/div/div[2]/div/div/div[1]/div').text
@@ -50,10 +52,11 @@ class SIS:
             subCode = driver.find_element(By.XPATH, subCodeXpath).text
             subName = driver.find_element(By.XPATH, subNameXpath).text
             
-            courseData.append({subCode: {
-                subName,
-                subAttendance,
-            }})
+            courseData.append({
+                "code": subCode,
+                "name": subName,
+                "attendance": subAttendance
+            })
             
         # rows = driver.find_elements(By.XPATH, "//tr[starts-with(@class, 'bb-tooltip-name-')]")
         # for row in rows:
@@ -61,6 +64,8 @@ class SIS:
         #     subMarks = row.find_element(By.CLASS_NAME, "value").text.strip()
         #     print(subMarks)
         #     #  courseData[subCode].add(subMarks)
+        
+        driver.quit()
 
         return Data(
                 name=name,
@@ -73,6 +78,7 @@ class SIS:
             )
         
     def login(self, usn, password):
+        driver = self.driver
         driver.find_element(By.ID, "username").send_keys(usn)  # 07-08-2005
         Select(driver.find_element(By.ID, 'dd')).select_by_index(int(password[0:2].lstrip('0')))
         Select(driver.find_element(By.ID, 'mm')).select_by_index(int(password[3:5].lstrip('0')))
